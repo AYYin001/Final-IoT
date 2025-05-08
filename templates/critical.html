@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TTGO Critical GPS Log</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 8px; border: 1px solid #ccc; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .alert { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>TTGO Critical GPS Log</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Speed (km/h)</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+                <tr>
+                    <td>{{ entry.lat }}</td>
+                    <td>{{ entry.lng }}</td>
+                    <td {% if entry.speed > 6 %} class="alert" {% endif %}>
+                        {{ entry.speed }} {% if entry.speed > 6 %} 🚨  {% endif %}
+                    </td>
+                    <td>{{ entry.timestamp }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/">🗺️  Back to Map</a> |
+    <a href="/log">📜  View Full Log</a>
+<a href="/download/gps_log.csv" download>⬇️ Download Full Log (CSV)</a>
+</body>
+</html>
